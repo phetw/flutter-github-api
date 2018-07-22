@@ -32,12 +32,15 @@ class _MyGithubProfileState extends State<MyGithubProfilePage> {
     var response = await http
         .get(Uri.encodeFull(url), headers: {"Accept": "application/json"});
     setState(() {
-      var dataConvertedToJSON = JSON.decode(response.body);
-      profileJSON = dataConvertedToJSON;
-      profile = Profile.fromJson(profileJSON);
-      print(profile.name);
+      if (response.statusCode == 200) {
+        var dataConvertedToJSON = JSON.decode(response.body);
+        profileJSON = dataConvertedToJSON;
+        profile = Profile.fromJson(profileJSON);
+      } else {
+        throw Exception('Error fetching data');
+      }
     });
-    return "Successfull";
+    return "Successful";
   }
 
   @override
@@ -57,26 +60,41 @@ class _MyGithubProfileState extends State<MyGithubProfilePage> {
   }
 
   Widget _buildProfile() {
-    return new Container(
-      child: new Center(
-        child: Text(profile.name),
-      ),
-    );
+    return profile != null
+        ? new Container(
+            padding: EdgeInsets.all(50.0),
+            child: new Column(
+              children: <Widget>[
+                new Center(
+                  child: new Image.network(
+                    profile.avatar,
+                    width: 200.0,
+                  ),
+                ),
+                Text(profile.name),
+                Text(profile.location),
+              ],
+            ),
+          )
+        : null;
   }
 }
 
 class Profile {
   final String name;
   final String location;
+  final String avatar;
 
   Profile({
     this.name,
-    // this.location,
+    this.location,
+    this.avatar,
   });
   factory Profile.fromJson(Map<String, dynamic> json) {
     return Profile(
       name: json['name'] as String,
-      // location: json['location'] as String,
+      location: json['location'] as String,
+      avatar: json['avatar_url'] as String,
     );
   }
 }
