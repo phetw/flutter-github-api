@@ -50,9 +50,10 @@ class _MyGithubProfileState extends State<MyGithubProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final String title = profile == null ? "My Github profile" : profile.login;
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("My Github profile"),
+        title: new Text(title),
         elevation: 4.5,
       ),
       body: _buildProfile(),
@@ -61,23 +62,21 @@ class _MyGithubProfileState extends State<MyGithubProfilePage> {
 
   Widget _buildProfile() {
     final TextStyle _nameFont =
-        new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500);
+        new TextStyle(fontSize: 25.0, fontWeight: FontWeight.w500);
     final TextStyle _normalFont =
         new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300);
 
     return profile != null
         ? new Container(
-            padding: EdgeInsets.all(50.0),
             child: new Column(
               children: <Widget>[
                 new Container(
                   child: new Image.network(
                     profile.avatar,
-                    width: 280.0,
                   ),
                 ),
                 new Container(
-                  padding: EdgeInsets.all(20.0),
+                  padding: EdgeInsets.all(18.0),
                   child: Text(
                     profile.name,
                     style: _nameFont,
@@ -85,7 +84,7 @@ class _MyGithubProfileState extends State<MyGithubProfilePage> {
                 ),
                 Divider(),
                 new Container(
-                  padding: EdgeInsets.all(20.0),
+                  padding: EdgeInsets.all(15.0),
                   child: Text(
                     profile.location,
                     style: _normalFont,
@@ -99,17 +98,20 @@ class _MyGithubProfileState extends State<MyGithubProfilePage> {
 }
 
 class Profile {
+  final String login;
   final String name;
   final String location;
   final String avatar;
 
   Profile({
+    this.login,
     this.name,
     this.location,
     this.avatar,
   });
   factory Profile.fromJson(Map<String, dynamic> json) {
     return Profile(
+      login: json['login'] as String,
       name: json['name'] as String,
       location: json['location'] as String,
       avatar: json['avatar_url'] as String,
