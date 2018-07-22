@@ -89,7 +89,8 @@ class _MyGithubProfileState extends State<MyGithubProfilePage> {
                     profile.location,
                     style: _normalFont,
                   ),
-                )
+                ),
+                Divider(),
               ],
             ),
           )
