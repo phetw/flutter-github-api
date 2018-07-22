@@ -11,8 +11,7 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Flutter - Github API',
       theme: new ThemeData(
-        primarySwatch: Colors.blueGrey,
-      ),
+          primarySwatch: Colors.blueGrey, fontFamily: 'RobotoMono'),
       home: new MyGithubProfilePage(),
     );
   }
@@ -53,26 +52,45 @@ class _MyGithubProfileState extends State<MyGithubProfilePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Github profile"),
+        title: new Text("My Github profile"),
+        elevation: 4.5,
       ),
       body: _buildProfile(),
     );
   }
 
   Widget _buildProfile() {
+    final TextStyle _nameFont =
+        new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500);
+    final TextStyle _normalFont =
+        new TextStyle(fontSize: 20.0, fontWeight: FontWeight.w300);
+
     return profile != null
         ? new Container(
             padding: EdgeInsets.all(50.0),
             child: new Column(
               children: <Widget>[
-                new Center(
+                new Container(
                   child: new Image.network(
                     profile.avatar,
-                    width: 200.0,
+                    width: 280.0,
                   ),
                 ),
-                Text(profile.name),
-                Text(profile.location),
+                new Container(
+                  padding: EdgeInsets.all(20.0),
+                  child: Text(
+                    profile.name,
+                    style: _nameFont,
+                  ),
+                ),
+                Divider(),
+                new Container(
+                  padding: EdgeInsets.all(20.0),
+                  child: Text(
+                    profile.location,
+                    style: _normalFont,
+                  ),
+                )
               ],
             ),
           )
