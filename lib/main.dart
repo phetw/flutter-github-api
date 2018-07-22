@@ -54,6 +54,7 @@ class _MyGithubProfileState extends State<MyGithubProfilePage> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(title),
+        leading: (Icon(Icons.trending_flat)),
         elevation: 4.5,
       ),
       body: _buildProfile(),
